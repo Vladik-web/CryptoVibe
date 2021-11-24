@@ -12,29 +12,60 @@
 
 html,
 body {
+ 
+}
+body {
+  width: 100%;
+  
+  justify-content: space-between;
   overflow-x: hidden;
+   font-family: "Montserrat", sans-serif;
+  
+}
+.container{
+ 
   background: black;
   height: 100vh;
   display: flex;
   align-items: center;
+  position: relative;
   overflow: hidden;
+
 }
-body {
+.container::before{
+  content: '';
+  background: url(../img/wave.svg);
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 100px;
+  height: 70px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: aaa 1s ease-in infinite alternate backwards;
+}
+@keyframes aaa {
+  from{
+    transform: translateY(0);
+  }to{
+    transform: translateY(-10px);
+  }
+}
+.svg{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 body > .wrap {
+
   flex: 1 1 auto;
 }
 
 .wrap {
-  
-  font-family: "Montserrat", sans-serif;
+  margin:0 100px;
+ 
+  padding-right: 30px;
   height: 100vh;
   overflow-y: auto;
-		
 		height: 80vh;
   width: 100%;
   display: grid;
@@ -51,17 +82,31 @@ body > .wrap {
   padding: 10px;
   margin: 0 auto;
   height: 60px;
+  
   width: 100%;
   display: flex;
-  justify-content: space-between;
-
+  
   margin-bottom: 20px;
   justify-content: space-between;
   border-radius: 0 10px 0 10px;
   transition: 0.1s ease-out;
-  animation: show 1s ease;
+  /* animation: show 1s ease; */
   transform: translateY(0);
 }
+.item > p{
+  transition: .2s ease;
+  font-weight: bold;
+  font-size: 25px;
+}
+.item:hover > p{
+  letter-spacing: 3px;
+  
+}
+.item.active{
+  
+  height: 300px;
+}
+
 @keyframes show {
   from {
     transform: translateY(-100%);
@@ -77,6 +122,7 @@ body > .wrap {
   text-align: right;
   row-gap: 3px;
 }
+
 p.newPrice {
   letter-spacing: 0.5px;
   align-self: flex-start;
@@ -93,12 +139,15 @@ span.oldPrice {
 .setInt {
   border-radius: 0 0 5px 0;
 }
+.setInt img{
+  transition: 0.2s ease;
+}
+.setInt.active img{
+  transform: rotate(180deg);
+}
 .buttons {
   display: flex;
   flex-direction: column;
-}
-.buttons > button {
-  border-radius: 0 0 0 5px;
 }
 .btn {
   cursor: pointer;
@@ -109,9 +158,29 @@ span.oldPrice {
 
   margin-bottom: 10px;
 }
+.btn>span{
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}
+.buttons > button {
+  width: 200px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  align-items: center;
+  border-radius: 5px  0 0 5px;
+  transform: translateX(75%);
+  transition: .2s ease;
+}
+.buttons > button:hover{
+  transform: translateX(0);
+}
+
 .reload-inf.active + .reload-stop {
   transform: translateX(0);
 }
+
 .reload-stop {
   transition: transform 0.2s ease;
   transform: translateX(100%);
@@ -126,7 +195,9 @@ span.oldPrice {
   box-shadow: 0 5px 0 #006400;
   color: #fff;
 }
-.item.green::after {
+.item.red::after,
+.item.green::after,
+.item.gray::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -134,18 +205,22 @@ span.oldPrice {
   right: -30px;
   width: 24px;
   height: 24px;
+}
+.item.green::after{
   background: url(../img/Up.svg);
 }
-.item.red::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: -30px;
-  width: 24px;
-  height: 24px;
+.item.red::after{
   background: url(../img/Down.svg);
 }
+.item.gray::after{
+  background: url(../img/Vertical.svg);
+}
+.item.gray{
+  background-color: #808080;
+  box-shadow: 0 5px 0 #696969;
+  color: #fff;
+}
+
 .item.red {
   background-color: #a52a2a;
   box-shadow: 0 5px 0 rgb(115, 30, 30);
@@ -153,7 +228,8 @@ span.oldPrice {
 }
 
 .item.green:hover,
-.item.red:hover {
+.item.red:hover,
+.item.gray:hover {
   cursor: pointer;
   transform: translateY(4px);
 }
@@ -161,7 +237,9 @@ span.oldPrice {
 .item.green:hover {
   box-shadow: 0 1px 0 #006400;
 }
-
+.item.gray:hover {
+  box-shadow: 0 1px 0 #696969;
+}
 .item.red:hover {
   box-shadow: 0 1px 0 rgb(115, 30, 30);
 }
@@ -180,4 +258,33 @@ span.oldPrice {
 }
 .block img {
   width: 30px;
+}
+.setInterval{
+  visibility: hidden;
+  width: 0;
+  padding: 0;
+  transition: 0.2s ease;
+  height: 100%;
+}
+.setInterval.active{
+  visibility: visible;
+  width: 500px;
+  padding: 30px;
+
+	background-color: #fff;
+	
+}
+.setInterval.active ~.wrap{
+  column-gap: 40px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.setInterval__content{
+  transition: transform .2s ease;
+  transform: translateY(-1000%);
+}
+.setInterval.active .setInterval__content{
+ transform: translateY(0); 
+}
+.setInterval__head{
+  text-align: center;
 }

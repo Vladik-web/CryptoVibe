@@ -18,19 +18,22 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) =>
         data.map((item) => {
           let correctPrice = item.price.split(".");
-										
-										
-										return {
-            symbol: item.symbol,
-            price: correctPrice[0].length > 3 
+										return {symbol: item.symbol.substr(0, item.symbol.length - 4), price: correctPrice[0].length > 3 
 												? correctPrice[0] + "." + correctPrice[1].substr(0, 2) 
 												: correctPrice[0] + "." + correctPrice[1].substr(0, 3)
           };
         })
       )
       .then((data) => {
-        //режим массив
-								console.log(data);
+        const chooseColor = (newPrice, oldPrice) =>{
+            if(newPrice > oldPrice){
+              return "green";
+            }else if(newPrice == oldPrice){
+              return "gray";
+            }else{
+              return "red";
+            }
+        }
         let newMass = data.slice(0, 30);
         newMass.forEach((item, index) => {
           //инициализация
@@ -46,9 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           const elems = `
-                    <div class ="item ${
-            item.price > obg[index].old ? "green" : "red"
-          }" 
+                    <div class ="item ${chooseColor(item.price, obg[index].old)}" 
                       
                       data-id="${obg[index].id}">
                         <p>${item.symbol}</p>
@@ -59,17 +60,36 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                     `;
-          obg[index].old = item.price;
 
+          obg[index].old = item.price;
           wrap.insertAdjacentHTML("beforeend", elems);
+           
         });
+        
       });
+      
+      const items = document.querySelectorAll('.item')
+      items.forEach(item=>{
+        item.addEventListener('click',()=>{
+          item.classList.toggle('active')
+        })
+      })
+      
   };
   get();
   /* btns */
-  const btns = [".reload-one", ".reload-inf", ".reload-stop"];
-
+  const btns = [".reload-one", ".reload-inf", ".reload-stop", '.setInt'];
+  
   const inf = document.querySelector(btns[1]);
+	const setInt = document.querySelector('.setInterval');
+  const oprionsBtn = document.querySelector('.setInt');
+
+	oprionsBtn.addEventListener('click', (event)=>{
+    oprionsBtn.classList.toggle('active')
+    setInt.classList.toggle('active')
+    
+  })
+
 
   let interval;
   buttons.forEach((item) => {

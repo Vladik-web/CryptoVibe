@@ -32,23 +32,7 @@ body {
   overflow: hidden;
 
 }
-.container::before{
-  content: '';
-  background: url(../img/wave.svg);
-  width: 100%;
-  height: 70px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  animation: aaa 1s ease-in infinite alternate backwards;
-}
-@keyframes aaa {
-  from{
-    transform: translateY(0);
-  }to{
-    transform: translateY(-10px);
-  }
-}
+
 .svg{
   position: absolute;
   top: 0;
@@ -98,10 +82,7 @@ body > .wrap {
   font-weight: bold;
   font-size: 25px;
 }
-.item:hover > p{
-  letter-spacing: 3px;
-  
-}
+
 .item.active{
   
   height: 300px;

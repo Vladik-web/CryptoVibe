@@ -49,11 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           const elems = `
-                    <div class ="item ${chooseColor(item.price, obg[index].old)}" 
+                    <div class ="item wow bounceInUp ${chooseColor(item.price, obg[index].old)} " data-percent="" 
                       
                       data-id="${obg[index].id}">
                         <p>${item.symbol}</p>
-
+                        <span>${(item.price - obg[index].old).toFixed(5)}$</span>
                         <div class ="price">
                           <p class="newPrice">${item.price}</p>
                           <span class="oldPrice">${obg[index].old}</span>
